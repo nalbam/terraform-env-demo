@@ -1,29 +1,33 @@
-# Local .terraform directories
-**/.terraform/*
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
 
-# .tfstate files
-*.tfstate
-*.tfstate.*
+# Folder config file
+Desktop.ini
 
-# Crash log files
-crash.log
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
-# .tfvars files are managed as part of configuration and so should be included in
-# version control.
-#
-# example.tfvars
+# Windows shortcuts
+*.lnk
 
-# Ignore override files as they are usually used to override resources locally and so
-# are not checked in
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+# Mac
+.DS_Store
 
-# Include override files you do wish to add to version control using negated pattern
-#
-# !example_override.tf
+# Terraform
+.terraform/
+.terraform.tfstate.lock.info
+terraform.tfstate.backup
+terraform.tfstate
+terraform.tfplan
 
-# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
+# Maven
+target/
+build/
+
+# JetBrains
+.idea/
+*.iml
+
+# Temp
+.output/

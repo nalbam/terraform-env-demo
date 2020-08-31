@@ -1,0 +1,93 @@
+nameOverride: keycloak
+
+replicas: 2
+
+ingress:
+  enabled: true
+  annotations:
+    # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+  rules:
+    - host: "keycloak.bruce.spic.me"
+      paths:
+        - /
+  tls:
+    - secretName: keycloak-tls
+      hosts:
+        - "keycloak.bruce.spic.me"
+
+# podAnnotations:
+#   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule
+
+affinity: |
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - ops
+
+extraEnv: |
+  - name: KEYCLOAK_USER_FILE
+    value: /admin/username
+  - name: KEYCLOAK_PASSWORD_FILE
+    value: /admin/password
+  - name: KEYCLOAK_IMPORT
+    value: /realm/demo.json
+  - name: KEYCLOAK_STATISTICS
+    value: all
+#   - name: PROXY_ADDRESS_FORWARDING
+#     value: "true"
+
+extraVolumes: |
+  - name: keycloak-admin
+    secret:
+      secretName: keycloak-admin
+  - name: keycloak-realm
+    secret:
+      secretName: keycloak-realm
+
+extraVolumeMounts: |
+  - name: keycloak-admin
+    mountPath: "/admin/"
+    readOnly: true
+  - name: keycloak-realm
+    mountPath: "/realm/"
+    readOnly: true
+
+# extraArgs: -Dkeycloak.import=/realm/demo.json
+
+# persistence:
+#   deployPostgres: true
+#   dbVendor: postgres
+#   dbHost: keycloak-postgresql
+#   dbPort: 5432
+#   dbUser: keycloak
+#   dbPassword: password
+
+# https://hub.helm.sh/charts/bitnami/postgresql
+postgresql:
+  enabled: true
+  # postgresqlUsername: keycloak
+  # postgresqlPassword: password
+  # replication:
+  #   enabled: false
+  persistence:
+    enabled: true
+    storageClass: default
+    size: 10Gi
+
+serviceMonitor:
+  enabled: true
+  labels:
+    release: prometheus-operator

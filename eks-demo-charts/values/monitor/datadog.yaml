@@ -1,0 +1,42 @@
+nameOverride: datadog
+
+datadog:
+  clusterName: # CLUSTER_NAME
+
+  apiKey: DATADOG_API_KEY
+  apiKeyExistingSecret: # DATADOG_API_KEY_SECRET
+
+  appKey: DATADOG_APP_KEY
+  appKeyExistingSecret: # DATADOG_APP_KEY_SECRET
+
+  kubeStateMetricsEnabled: false
+
+  dogstatsd:
+    useHostPort: true
+    nonLocalTraffic: true
+
+  logs:
+    enabled: true
+
+  apm:
+    enabled: true
+
+  env:
+    - name: DD_TAGS
+      value: "env:alpha country:kr country_code:kr"
+    - name: DD_AGENT_HOST
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+
+  # tags:
+  #   - env: alpha
+  #   - country: kr
+  #   - country_code: kr
+
+agents:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule

@@ -1,0 +1,23 @@
+nameOverride: argo-rollouts
+
+installCRDs: true
+
+controller:
+  image:
+    tag: v0.8.3
+
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops

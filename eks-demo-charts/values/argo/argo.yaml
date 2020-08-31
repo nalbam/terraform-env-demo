@@ -1,0 +1,76 @@
+nameOverride: argo
+
+installCRD: true
+
+# init:
+#   serviceAccount: ""
+
+controller:
+  podAnnotations:
+    iam.amazonaws.com/role: "eks-demo-bucket"
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      release: prometheus-operator
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: IAM_ROLE_ARN
+  workflowNamespaces:
+    - default
+
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+server:
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: IAM_ROLE_ARN
+
+  ingress:
+    enabled: false
+    annotations:
+      # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    hosts:
+      - "argo.bruce.spic.me"
+    tls:
+      - secretName: argo-tls
+        hosts:
+          - "argo.bruce.spic.me"
+
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+useDefaultArtifactRepo: true
+useStaticCredentials: false
+
+artifactRepository:
+  s3:
+    bucket: "eks-demo-argo-demo"
+    endpoint: s3.amazonaws.com

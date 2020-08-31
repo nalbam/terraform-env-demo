@@ -1,0 +1,127 @@
+nameOverride: grafana
+
+adminUser: "admin"
+adminPassword: "password"
+
+ingress:
+  enabled: true
+  annotations:
+    # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+  hosts:
+    - "grafana.bruce.spic.me"
+  tls:
+    - secretName: grafana-tls
+      hosts:
+        - "grafana.bruce.spic.me"
+
+podAnnotations:
+  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - ops
+
+grafana.ini:
+  server:
+    root_url: "https://grafana.bruce.spic.me/"
+  auth:
+    disable_login_form: true
+  auth.generic_oauth:
+    enabled: true
+    client_id: "grafana"
+    client_secret: "df7d395f-e833-49b6-b19c-eea8a54fb06a"
+    auth_url: "https://keycloak.bruce.spic.me/auth/realms/demo/protocol/openid-connect/auth"
+    token_url: "https://keycloak.bruce.spic.me/auth/realms/demo/protocol/openid-connect/token"
+    api_url: "https://keycloak.bruce.spic.me/auth/realms/demo/protocol/openid-connect/userinfo"
+    scopes: "openid email profile roles"
+    allow_sign_up: "true"
+
+sidecar:
+  dashboards:
+    enabled: true
+
+persistence:
+  enabled: true
+  storageClassName: default
+  size: 10Gi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: "http://prometheus-operator-prometheus:9090"
+        access: proxy
+        isDefault: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: default
+        orgId: 1
+        folder: ""
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    # https://grafana.com/dashboards/
+    kube-cluster:
+      gnetId: 9797
+      revision: 13
+      datasource: Prometheus
+    kube-deployment:
+      gnetId: 9679
+      revision: 8
+      datasource: Prometheus
+    jenkins-overview:
+      gnetId: 12444
+      revision: 1
+      datasource: Prometheus
+    jvm-overview:
+      gnetId: 11526
+      revision: 8
+      datasource: Prometheus
+
+    node-exporter:
+      gnetId: 11074
+      revision: 2
+      datasource: Prometheus
+    nodejs-application:
+      gnetId: 11159
+      revision: 1
+      datasource: Prometheus
+    cluster-autoscaler:
+      gnetId: 3831
+      revision: 1
+      datasource: Prometheus
+
+    nginx-ingress:
+      url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+      datasource: Prometheus
+    argo-cd:
+      url: https://raw.githubusercontent.com/argoproj/argo-cd/master/examples/dashboard.json
+      datasource: Prometheus
+    argo-rollouts:
+      url: https://raw.githubusercontent.com/argoproj/argo-rollouts/master/examples/dashboard.json
+      datasource: Prometheus

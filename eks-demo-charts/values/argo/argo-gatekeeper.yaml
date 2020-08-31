@@ -1,0 +1,22 @@
+nameOverride: argo-gatekeeper
+
+discoveryURL: https://keycloak.bruce.spic.me/auth/realms/demo
+
+upstreamURL: http://argo-server.argo.svc.cluster.local:2746
+
+ClientID: argo
+ClientSecret: 60820e7d-80a1-4e63-9ae1-b83972eaa020
+
+ingress:
+  enabled: true
+  annotations:
+    # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+  hosts:
+    - "argo.bruce.spic.me"
+  tls:
+    - secretName: argo-gatekeeper-tls
+      hosts:
+        - "argo.bruce.spic.me"

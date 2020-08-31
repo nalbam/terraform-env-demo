@@ -1,0 +1,31 @@
+nameOverride: cert-manager
+
+installCRDs: true
+
+ingressShim:
+  defaultIssuerName: letsencrypt-issuer
+  defaultIssuerKind: ClusterIssuer
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - ops
+
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true
+    prometheusInstance: default
+    labels:
+      release: prometheus-operator

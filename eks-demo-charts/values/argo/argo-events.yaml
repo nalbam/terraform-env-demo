@@ -1,0 +1,13 @@
+nameOverride: argo-events
+
+installCRD: true
+
+# sensor controller
+sensorController:
+  replicaCount: 1
+
+eventsourceController:
+  replicaCount: 1
+
+eventbusController:
+  replicaCount: 1

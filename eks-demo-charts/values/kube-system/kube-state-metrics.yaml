@@ -1,0 +1,7 @@
+nameOverride: kube-state-metrics
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule

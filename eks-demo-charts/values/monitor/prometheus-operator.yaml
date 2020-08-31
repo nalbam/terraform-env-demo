@@ -1,0 +1,113 @@
+fullnameOverride: prometheus-operator
+
+prometheusOperator:
+  createCustomResource: false
+
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 30s
+
+    tolerations:
+      - key: node-role
+        operator: Equal
+        value: ops
+        effect: NoSchedule
+
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #         - matchExpressions:
+    #             - key: node-role
+    #               operator: In
+    #               values:
+    #                 - ops
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+
+    ruleSelector:
+      matchLabels:
+        role: alert-rules
+
+grafana:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: true
+
+alertmanager:
+  enabled: true
+
+  alertmanagerSpec:
+    tolerations:
+      - key: node-role
+        operator: Equal
+        value: ops
+        effect: NoSchedule
+
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role
+                  operator: In
+                  values:
+                    - ops
+
+  config:
+    global:
+      resolve_timeout: 5m
+      slack_api_url: ""
+    route:
+      # group_by: ["job"]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      # receiver: "slack"
+      routes:
+        - match:
+            alertname: Watchdog
+          receiver: "null"
+        - match:
+          receiver: "slack"
+          continue: false
+    receivers:
+      - name: "null"
+      - name: "slack"
+        slack_configs:
+          - channel: "#kube-alerts"
+            send_resolved: false
+            color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+            title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] Monitoring Event Notification'
+            text: >-
+              {{ range .Alerts }}
+                *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+                *Description:* `{{ .Annotations.description }}`
+                *Details:*
+                {{ range .Labels.SortedPairs }} • *{{ .Name }}:* {{ .Value }}
+                {{ end }}
+              {{ end }}

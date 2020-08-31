@@ -1,0 +1,26 @@
+nameOverride: chaoskube
+
+# don't kill pods, only log what would have been done
+dryRun: false
+
+# Enable debug logging
+debug: true
+
+interval: 10m
+
+timezone: Asia/Seoul
+
+# labels: "app=sample,stage!=prod"
+
+annotations: "chaos.alpha.kubernetes.io/enabled=true"
+
+namespaces: "!kube-system,!production"
+
+# includedPodNames: "sample-"
+
+# excludedWeekdays: "Sat,Tue"
+# excludedTimesOfDay: "07:00-23:00"
+# excludedDaysOfYear: "Apr1,Dec24"
+
+rbac:
+  create: true

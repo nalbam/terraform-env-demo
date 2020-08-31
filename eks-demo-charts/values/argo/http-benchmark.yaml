@@ -1,0 +1,44 @@
+resources:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AnalysisTemplate
+    metadata:
+      name: http-benchmark
+    spec:
+      args:
+        - name: url
+      metrics:
+        - name: http-benchmark
+          count: 5
+          failureLimit: 5
+          interval: 10s
+          provider:
+            job:
+              spec:
+                template:
+                  metadata:
+                    annotations:
+                      sidecar.istio.io/inject: "false"
+                  spec:
+                    containers:
+                      - name: load-tester
+                        image: argoproj/load-tester:latest
+                        command: [sh, -xec]
+                        args:
+                          - |
+                            wrk -t5 -c5 -d10 -s report.lua {{args.url}}
+                            jq -e '.errors_ratio <= 0.1' report.json
+                    restartPolicy: Never
+                # https://kubernetes.io/ko/docs/concepts/workloads/controllers/jobs-run-to-completion/
+                activeDeadlineSeconds: 180
+                backoffLimit: 10
+                ttlSecondsAfterFinished: 300
+# https://github.com/wg/wrk
+# -c, --connections: total number of HTTP connections to keep open with
+#                    each thread handling N = connections/threads
+# -d, --duration:    duration of the test, e.g. 2s, 2m, 2h
+# -t, --threads:     total number of threads to use
+# -s, --script:      LuaJIT script, see SCRIPTING
+# -H, --header:      HTTP header to add to request, e.g. "User-Agent: wrk"
+#     --latency:     print detailed latency statistics
+#     --timeout:     record a timeout if a response is not received within
+#                    this amount of time.

@@ -1,0 +1,175 @@
+nameOverride: argocd
+
+installCRDs: true
+
+controller:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: prometheus-operator
+
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+server:
+  extraArgs:
+    - --insecure
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: prometheus-operator
+
+  ingress:
+    enabled: true
+    annotations:
+      # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - "argocd.bruce.spic.me"
+    tls:
+      - secretName: argocd-server-tls
+        hosts:
+          - "argocd.bruce.spic.me"
+    https: false
+
+  ingressGrpc:
+    enabled: false
+    annotations:
+      # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    hosts:
+      - "argocd-grpc.bruce.spic.me"
+    tls:
+      - secretName: argocd-grpc-server-tls
+        hosts:
+          - "argocd-grpc.bruce.spic.me"
+    https: false
+
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+  config:
+    url: "https://argocd.bruce.spic.me"
+
+    repositories: |
+      - name: env-demo
+        type: git
+        url: https://github.com/opspresso/argocd-env-demo
+      - name: stable
+        type: helm
+        url: https://kubernetes-charts.storage.googleapis.com
+      - name: argo
+        type: helm
+        url: https://argoproj.github.io/argo-helm
+      - name: opspresso
+        type: helm
+        url: https://opspresso.github.io/helm-charts
+
+    # https://argoproj.github.io/argo-cd/operator-manual/user-management/keycloak/
+    oidc.config: |
+      name: SSO
+      clientID: 'argo-cd'
+      clientSecret: 'd91fdbbc-5dbb-43ab-b388-ce4170ff79c6'
+      issuer: 'https://keycloak.bruce.spic.me/auth/realms/demo'
+      requestedScopes:
+        - openid
+        - email
+        - profile
+        - groups
+
+  # https://argoproj.github.io/argo-cd/operator-manual/rbac/
+  rbacConfig:
+    policy.default: role:readonly
+    policy.csv: |
+      g, "/admin", role:admin
+
+  additionalApplications: []
+
+  additionalProjects: []
+
+dex:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+redis:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops
+
+repoServer:
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: ops
+      effect: NoSchedule
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - ops

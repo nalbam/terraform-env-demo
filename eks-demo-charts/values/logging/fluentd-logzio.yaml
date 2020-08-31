@@ -1,0 +1,9 @@
+nameOverride: fluentd-logzio
+
+tolerations:
+  - key: node-role.kubernetes.io/master
+    effect: NoSchedule
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule
