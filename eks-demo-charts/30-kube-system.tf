@@ -93,36 +93,6 @@ resource "helm_release" "k8s-spot-termination-handler" {
   wait = false
 }
 
-resource "helm_release" "external-secrets" {
-  repository = "https://godaddy.github.io/kubernetes-external-secrets/"
-  chart      = "kubernetes-external-secrets"
-  version    = var.external_secrets_kubernetes_external_secrets
-
-  namespace = "kube-system"
-  name      = "external-secrets"
-
-  values = [
-    file("./values/kube-system/external-secrets.yaml")
-  ]
-
-  set {
-    name  = "env.AWS_REGION"
-    value = var.region
-  }
-
-  set {
-    name  = "env.AWS_DEFAULT_REGION"
-    value = var.region
-  }
-
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_ssm.arn
-  }
-
-  wait = false
-}
-
 resource "helm_release" "metrics-server" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "metrics-server"
@@ -137,6 +107,36 @@ resource "helm_release" "metrics-server" {
 
   wait = false
 }
+
+# resource "helm_release" "external-secrets" {
+#   repository = "https://godaddy.github.io/kubernetes-external-secrets/"
+#   chart      = "kubernetes-external-secrets"
+#   version    = var.external_secrets_kubernetes_external_secrets
+
+#   namespace = "kube-system"
+#   name      = "external-secrets"
+
+#   values = [
+#     file("./values/kube-system/external-secrets.yaml")
+#   ]
+
+#   set {
+#     name  = "env.AWS_REGION"
+#     value = var.region
+#   }
+
+#   set {
+#     name  = "env.AWS_DEFAULT_REGION"
+#     value = var.region
+#   }
+
+#   set {
+#     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+#     value = module.irsa_ssm.arn
+#   }
+
+#   wait = false
+# }
 
 # resource "helm_release" "kube-state-metrics" {
 #   repository = "https://kubernetes-charts.storage.googleapis.com"
