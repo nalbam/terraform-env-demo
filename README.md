@@ -1,5 +1,13 @@
 # terraform-env-workshop
 
+## install
+
+```bash
+brew install awscli
+brew install kubernetes-cli
+brew install terraform
+```
+
 ## variable
 
 ```bash
