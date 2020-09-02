@@ -20,6 +20,10 @@
       "default": "3.3.0", 
       "description": "bitnami/external-dns"
     }, 
+    "chaos_mesh_chaos_mesh": {
+      "default": "v0.1.1", 
+      "description": "chaos-mesh/chaos-mesh"
+    }, 
     "codecentric_keycloak": {
       "default": "9.0.5", 
       "description": "codecentric/keycloak"

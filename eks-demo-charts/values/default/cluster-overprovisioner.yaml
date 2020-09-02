@@ -3,3 +3,5 @@
 # https://medium.com/scout24-engineering/cluster-overprovisiong-in-kubernetes-79433cb3ed0e
 
 nameOverride: cluster-overprovisioner
+
+deployments: []

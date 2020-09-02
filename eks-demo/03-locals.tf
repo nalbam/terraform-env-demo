@@ -30,15 +30,15 @@ locals {
       username = "bruce"
       groups   = ["system:masters"]
     },
-    {
-      userarn  = "arn:aws:iam::${local.account_id}:user/developer"
-      username = "developer"
-      groups   = []
-    },
-    {
-      userarn  = "arn:aws:iam::${local.account_id}:user/readonly"
-      username = "readonly"
-      groups   = []
-    },
+    # {
+    #   userarn  = "arn:aws:iam::${local.account_id}:user/developer"
+    #   username = "developer"
+    #   groups   = []
+    # },
+    # {
+    #   userarn  = "arn:aws:iam::${local.account_id}:user/readonly"
+    #   username = "readonly"
+    #   groups   = []
+    # },
   ]
 }

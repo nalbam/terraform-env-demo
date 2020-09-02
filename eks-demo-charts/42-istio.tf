@@ -4,11 +4,11 @@
 # istioctl manifest generate --set profile=demo | kubectl delete -f -
 
 variable "kiali_gatekeeper" {
-  default = true
+  default = false
 }
 
 variable "tracing_gatekeeper" {
-  default = true
+  default = false
 }
 
 resource "helm_release" "kiali-gatekeeper" {

@@ -2,27 +2,6 @@ resources:
   - apiVersion: argoproj.io/v1alpha1
     kind: Application
     metadata:
-      name: sample-docs-prod
-    spec:
-      project: default
-      source:
-        repoURL: "https://github.com/opspresso/argocd-env-demo"
-        path: sample-docs
-        targetRevision: HEAD
-        helm:
-          valueFiles:
-            - values-demo-prod.yaml
-      destination:
-        server: "https://kubernetes.default.svc"
-        namespace: demo-prod
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-
-  - apiVersion: argoproj.io/v1alpha1
-    kind: Application
-    metadata:
       name: sample-node-dev
     spec:
       project: default

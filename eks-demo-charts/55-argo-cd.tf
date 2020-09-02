@@ -28,7 +28,37 @@ resource "helm_release" "argo-cd" {
   name      = "argocd"
 
   values = [
-    file("./values/argo/argo-cd.yaml")
+    file("./values/argo/argo-cd.yaml"),
+    yamlencode(
+      {
+        server = {
+          additionalApplications = [
+            {
+              name    = "apps-demo"
+              project = "default"
+              source = {
+                repoURL        = "https://github.com/opspresso/argocd-env-demo"
+                targetRevision = "HEAD"
+                path           = var.cluster_name
+                directory = {
+                  recurse = true
+                }
+              }
+              destination = {
+                server    = "https://kubernetes.default.svc"
+                namespace = "argo-cd"
+              }
+              syncPolicy = {
+                automated = {
+                  prune    = true
+                  selfHeal = true
+                }
+              }
+            }
+          ]
+        }
+      }
+    )
   ]
 
   wait = false
