@@ -48,7 +48,7 @@ variable "argo_cd_enabled" {
 }
 
 variable "argo_cd_apps_enabled" {
-  default = false
+  default = true
 }
 
 variable "cert_manager_enabled" {
