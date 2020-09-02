@@ -44,7 +44,7 @@ variable "argo_events_enabled" {
 }
 
 variable "argo_cd_enabled" {
-  default = false
+  default = true
 }
 
 variable "argo_cd_apps_enabled" {
