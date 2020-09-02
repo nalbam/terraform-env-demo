@@ -44,11 +44,11 @@ variable "argo_events_enabled" {
 }
 
 variable "argo_cd_enabled" {
-  default = true
+  default = false
 }
 
 variable "argo_cd_apps_enabled" {
-  default = true
+  default = false
 }
 
 variable "cert_manager_enabled" {
