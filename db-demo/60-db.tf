@@ -1,7 +1,7 @@
 # rds
 
 module "db" {
-  source = "github.com/nalbam/terraform-aws-rds?ref=v0.12.8"
+  source = "github.com/nalbam/terraform-aws-rds?ref=v0.12.11"
   # source = "../../../terraform-aws-rds"
 
   region = var.region
@@ -28,7 +28,7 @@ module "db" {
   vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
 
   # security group
-  allow_ip_address = data.terraform_remote_state.vpc.outputs.private_subnet_cidr
+  allow_ip_address = local.allow_ip_address
 
   # subnet group
   subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids

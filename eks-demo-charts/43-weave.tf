@@ -1,9 +1,5 @@
 # weave-scope
 
-variable "weave_scope_gatekeeper" {
-  default = true
-}
-
 resource "helm_release" "weave-scope" {
   count = var.weave_scope_enabled ? 1 : 0
 

@@ -12,4 +12,9 @@ locals {
 
   db_username = local.db_creds.username != "" ? local.db_creds.username : var.db_username
   db_password = local.db_creds.password != "" ? local.db_creds.password : var.db_username
+
+  allow_ip_address = concat(
+    data.terraform_remote_state.vpc.outputs.private_subnet_cidr,
+    formatlist("%s/32", data.terraform_remote_state.vpc.outputs.nat_gateway_ips),
+  )
 }

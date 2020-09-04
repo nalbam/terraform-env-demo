@@ -3,14 +3,6 @@
 # istioctl manifest apply --set profile=demo --set values.kiali.dashboard.auth.strategy=anonymous
 # istioctl manifest generate --set profile=demo | kubectl delete -f -
 
-variable "kiali_gatekeeper" {
-  default = false
-}
-
-variable "tracing_gatekeeper" {
-  default = false
-}
-
 resource "helm_release" "kiali-gatekeeper" {
   count = var.kiali_gatekeeper ? 1 : 0
 

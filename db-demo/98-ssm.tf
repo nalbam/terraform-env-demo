@@ -21,7 +21,7 @@ resource "aws_ssm_parameter" "endpoint" {
 resource "aws_ssm_parameter" "dbname" {
   name  = format("/rds/%s/%s", var.name, "dbname")
   type  = "SecureString"
-  value = var.db_name
+  value = module.db.name
 }
 
 resource "aws_ssm_parameter" "username" {

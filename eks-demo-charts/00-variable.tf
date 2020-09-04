@@ -31,9 +31,21 @@ variable "efs_id" {
   default = ""
 }
 
+### service ###
+
 variable "chaoskube_enabled" {
   default = true
 }
+
+variable "cert_manager_enabled" {
+  default = false
+}
+
+variable "weave_scope_enabled" {
+  default = false
+}
+
+### argo ###
 
 variable "argo_enabled" {
   default = false
@@ -51,9 +63,7 @@ variable "argo_cd_apps_enabled" {
   default = false
 }
 
-variable "cert_manager_enabled" {
-  default = false
-}
+### devops ###
 
 variable "jenkins_enabled" {
   default = false
@@ -83,6 +93,16 @@ variable "sonarqube_enabled" {
   default = false
 }
 
-variable "weave_scope_enabled" {
+### gatekeeper ###
+
+variable "kiali_gatekeeper" {
   default = false
+}
+
+variable "tracing_gatekeeper" {
+  default = false
+}
+
+variable "weave_scope_gatekeeper" {
+  default = true
 }
