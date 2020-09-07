@@ -1,7 +1,7 @@
 # iam policy
 
 module "irsa_asg" {
-  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.2"
+  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.3"
   # source = "../../../terraform-aws-eks-irsa"
 
   region = var.region
@@ -17,7 +17,7 @@ module "irsa_asg" {
 }
 
 module "irsa_efs" {
-  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.2"
+  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.3"
   # source = "../../../terraform-aws-eks-irsa"
 
   region = var.region
@@ -33,7 +33,7 @@ module "irsa_efs" {
 }
 
 module "irsa_ssm" {
-  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.2"
+  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.3"
   # source = "../../../terraform-aws-eks-irsa"
 
   region = var.region
@@ -49,7 +49,7 @@ module "irsa_ssm" {
 }
 
 module "irsa_dns" {
-  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.2"
+  source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.3"
   # source = "../../../terraform-aws-eks-irsa"
 
   region = var.region
