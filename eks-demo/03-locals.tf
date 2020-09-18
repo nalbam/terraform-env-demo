@@ -5,10 +5,10 @@ locals {
 }
 
 locals {
-  name = "${var.name}"
+  name = var.name
 
   workers = [
-    "arn:aws:iam::${local.account_id}:role/eks-demo-worker",
+    format("arn:aws:iam::%s:role/%s-%s", local.account_id, var.name, "worker"),
   ]
 
   map_roles = [
@@ -30,15 +30,15 @@ locals {
       username = "bruce"
       groups   = ["system:masters"]
     },
-    # {
-    #   userarn  = "arn:aws:iam::${local.account_id}:user/developer"
-    #   username = "developer"
-    #   groups   = []
-    # },
-    # {
-    #   userarn  = "arn:aws:iam::${local.account_id}:user/readonly"
-    #   username = "readonly"
-    #   groups   = []
-    # },
+    {
+      userarn  = "arn:aws:iam::${local.account_id}:user/developer"
+      username = "developer"
+      groups   = []
+    },
+    {
+      userarn  = "arn:aws:iam::${local.account_id}:user/readonly"
+      username = "readonly"
+      groups   = []
+    },
   ]
 }
