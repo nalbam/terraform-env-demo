@@ -1,8 +1,11 @@
 # svc
 
 module "svc" {
-  source = "github.com/nalbam/terraform-aws-eks-worker?ref=v0.12.38"
+  # source = "github.com/nalbam/terraform-aws-eks-worker?ref=v0.12.38"
   # source = "../../../terraform-aws-eks-worker"
+
+  source  = "nalbam/eks-worker/aws"
+  version = "0.12.38"
 
   region = var.region
 

@@ -1,8 +1,11 @@
 # eks
 
 module "eks" {
-  source = "github.com/nalbam/terraform-aws-eks?ref=v0.12.60"
+  # source = "github.com/nalbam/terraform-aws-eks?ref=v0.12.60"
   # source = "../../../terraform-aws-eks"
+
+  source  = "nalbam/eks/aws"
+  version = "0.12.60"
 
   region = var.region
 

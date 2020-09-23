@@ -1,8 +1,11 @@
 # rds
 
 module "db" {
-  source = "github.com/nalbam/terraform-aws-rds?ref=v0.12.11"
+  # source = "github.com/nalbam/terraform-aws-rds?ref=v0.12.11"
   # source = "../../../terraform-aws-rds"
+
+  source  = "nalbam/rds/aws"
+  version = "0.12.11"
 
   region = var.region
 
