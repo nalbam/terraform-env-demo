@@ -1,9 +1,5 @@
 # logging
 
-variable "fluentd_enabled" {
-  default = true
-}
-
 resource "helm_release" "fluentd-logzio" {
   count = var.fluentd_enabled ? data.aws_ssm_parameter.logzio_token.value != "" ? 1 : 0 : 0
 

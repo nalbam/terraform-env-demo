@@ -39,7 +39,7 @@ resource "helm_release" "argo-cd" {
               source = {
                 repoURL        = "https://github.com/opspresso/argocd-env-demo"
                 targetRevision = "HEAD"
-                path           = var.cluster_name
+                path           = format("%s/%s/%s", "cluster", var.region, var.cluster_name)
                 directory = {
                   recurse = true
                 }

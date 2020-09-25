@@ -1,6 +1,8 @@
 # monitor
 
 resource "helm_release" "grafana" {
+  count = var.grafana_enabled ? 1 : 0
+
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "grafana"
   version    = var.stable_grafana
@@ -36,24 +38,9 @@ resource "helm_release" "grafana" {
   ]
 }
 
-resource "helm_release" "prometheus-adapter" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "prometheus-adapter"
-  version    = var.stable_prometheus_adapter
-
-  namespace = "monitor"
-  name      = "prometheus-adapter"
-
-  values = [
-    file("./values/monitor/prometheus-adapter.yaml")
-  ]
-
-  wait = false
-
-  create_namespace = true
-}
-
 resource "helm_release" "prometheus-operator" {
+  count = var.prometheus_enabled ? 1 : 0
+
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "prometheus-operator"
   version    = var.stable_prometheus_operator
@@ -83,6 +70,8 @@ resource "helm_release" "prometheus-operator" {
 }
 
 resource "helm_release" "prometheus-alert-rules" {
+  count = var.prometheus_enabled ? 1 : 0
+
   repository = "https://kubernetes-charts-incubator.storage.googleapis.com"
   chart      = "raw"
 
@@ -102,7 +91,28 @@ resource "helm_release" "prometheus-alert-rules" {
   ]
 }
 
+resource "helm_release" "prometheus-adapter" {
+  count = var.prometheus_enabled ? 1 : 0
+
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "prometheus-adapter"
+  version    = var.stable_prometheus_adapter
+
+  namespace = "monitor"
+  name      = "prometheus-adapter"
+
+  values = [
+    file("./values/monitor/prometheus-adapter.yaml")
+  ]
+
+  wait = false
+
+  create_namespace = true
+}
+
 resource "helm_release" "datadog" {
+  count = var.datadog_enabled ? 1 : 0
+
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "datadog"
   version    = var.stable_datadog

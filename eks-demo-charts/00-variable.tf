@@ -31,20 +31,6 @@ variable "efs_id" {
   default = ""
 }
 
-### service ###
-
-variable "chaoskube_enabled" {
-  default = true
-}
-
-variable "cert_manager_enabled" {
-  default = false
-}
-
-variable "weave_scope_enabled" {
-  default = false
-}
-
 ### argo ###
 
 variable "argo_enabled" {
@@ -56,11 +42,55 @@ variable "argo_events_enabled" {
 }
 
 variable "argo_cd_enabled" {
-  default = true
+  default = false
 }
 
 variable "argo_cd_apps_enabled" {
   default = false
+}
+
+### monitor ###
+
+variable "grafana_enabled" {
+  default = false
+}
+
+variable "prometheus_enabled" {
+  default = false
+}
+
+variable "datadog_enabled" {
+  default = false
+}
+
+### logging ###
+
+variable "fluentd_enabled" {
+  default = false
+}
+
+### etc ###
+
+variable "chaoskube_enabled" {
+  default = false
+}
+
+variable "appmesh_enabled" {
+  default = false
+}
+
+variable "weave_scope_enabled" {
+  default = false
+}
+
+variable "cert_manager_enabled" {
+  default = false
+}
+
+### atlantis ###
+
+variable "atlantis_enabled" {
+  default = true
 }
 
 ### devops ###
@@ -104,5 +134,5 @@ variable "tracing_gatekeeper" {
 }
 
 variable "weave_scope_gatekeeper" {
-  default = true
+  default = false
 }

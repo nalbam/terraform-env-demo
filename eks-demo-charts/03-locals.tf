@@ -8,9 +8,9 @@ locals {
   root_domain = var.root_domain != "" ? var.root_domain : data.terraform_remote_state.eks.outputs.root_domain
   base_domain = var.base_domain != "" ? var.base_domain : data.terraform_remote_state.eks.outputs.base_domain
 
-  acm_arn = var.acm_arn != "" ? var.acm_arn : data.terraform_remote_state.eks.outputs.acm_arn
-
   hostname = "*.${local.base_domain}"
+
+  acm_arn = var.acm_arn != "" ? var.acm_arn : data.terraform_remote_state.eks.outputs.acm_arn
 
   efs_id = var.efs_id != "" ? var.efs_id : data.terraform_remote_state.eks.outputs.efs_id
 

@@ -19,6 +19,14 @@ data "aws_ssm_parameter" "admin_password" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "admin_password")
 }
 
+data "aws_ssm_parameter" "github_user" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_user")
+}
+
+data "aws_ssm_parameter" "github_token" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_token")
+}
+
 data "aws_ssm_parameter" "slack_token" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "slack_token")
 }

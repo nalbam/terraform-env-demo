@@ -1,0 +1,21 @@
+nameOverride: appmesh-controller
+
+replicaCount: 1
+region: ""
+accountId: ""
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - ops

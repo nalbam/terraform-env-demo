@@ -75,3 +75,25 @@ module "irsa_dns" {
 
   policy_document = data.aws_iam_policy_document.dns.json
 }
+
+module "irsa_appmesh" {
+  # source = "github.com/nalbam/terraform-aws-eks-irsa?ref=v0.12.3"
+  # source = "../../../terraform-aws-eks-irsa"
+
+  source  = "nalbam/eks-irsa/aws"
+  version = "0.12.3"
+
+  region = var.region
+
+  name = "${var.cluster_name}-irsa-appmesh"
+
+  cluster_name = var.cluster_name
+
+  kube_namespace      = "appmesh-system"
+  kube_serviceaccount = "appmesh-controller"
+
+  policy_arns = [
+    "arn:aws:iam::aws:policy/AWSAppMeshFullAccess",
+    "arn:aws:iam::aws:policy/AWSCloudMapFullAccess",
+  ]
+}
