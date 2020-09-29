@@ -21,7 +21,7 @@ controller:
   service:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: ""
-      external-dns.alpha.kubernetes.io/ttl: "300"
+      # external-dns.alpha.kubernetes.io/ttl: "300"
       service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
       service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
       service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
