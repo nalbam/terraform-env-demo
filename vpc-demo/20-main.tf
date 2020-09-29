@@ -1,7 +1,7 @@
 # vpc
 
 module "vpc" {
-  # source = "github.com/mzcdev/terraform-aws-vpc?ref=v0.12.42"
+  # source = "github.com/nalbam/terraform-aws-vpc?ref=v0.12.42"
   # source = "../../../terraform-aws-vpc"
 
   source  = "nalbam/vpc/aws"
