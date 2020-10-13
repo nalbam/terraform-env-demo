@@ -1,5 +1,32 @@
 # kube-ingress
 
+resource "helm_release" "alb-ingress" {
+  repository = "http://storage.googleapis.com/kubernetes-charts-incubator"
+  chart      = "aws-alb-ingress-controller"
+  version    = var.incubator_aws_alb_ingress_controller
+
+  namespace = "kube-ingress"
+  name      = "alb-ingress"
+
+  values = [
+    file("./values/kube-ingress/alb-ingress.yaml")
+  ]
+
+  set {
+    name  = "clusterName"
+    value = var.cluster_name
+  }
+
+  set {
+    name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = module.irsa_alb_ingress.arn
+  }
+
+  wait = false
+
+  create_namespace = true
+}
+
 resource "helm_release" "nginx-ingress" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "nginx-ingress"
@@ -45,7 +72,7 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_dns.arn
+    value = module.irsa_external_dns.arn
   }
 
   wait = false
@@ -53,45 +80,45 @@ resource "helm_release" "external-dns" {
   create_namespace = true
 }
 
-resource "helm_release" "cert-manager" {
-  count = var.cert_manager_enabled ? 1 : 0
+# resource "helm_release" "cert-manager" {
+#   count = var.cert_manager_enabled ? 1 : 0
 
-  repository = "https://charts.jetstack.io"
-  chart      = "cert-manager"
-  version    = var.jetstack_cert_manager
+#   repository = "https://charts.jetstack.io"
+#   chart      = "cert-manager"
+#   version    = var.jetstack_cert_manager
 
-  namespace = "kube-ingress"
-  name      = "cert-manager"
+#   namespace = "kube-ingress"
+#   name      = "cert-manager"
 
-  values = [
-    file("./values/kube-ingress/cert-manager.yaml")
-  ]
+#   values = [
+#     file("./values/kube-ingress/cert-manager.yaml")
+#   ]
 
-  create_namespace = true
+#   create_namespace = true
 
-  depends_on = [
-    helm_release.prometheus-operator,
-  ]
-}
+#   depends_on = [
+#     helm_release.prometheus-operator,
+#   ]
+# }
 
-resource "helm_release" "cert-manager-issuers" {
-  count = var.cert_manager_enabled ? 1 : 0
+# resource "helm_release" "cert-manager-issuers" {
+#   count = var.cert_manager_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts-incubator.storage.googleapis.com"
-  chart      = "raw"
+#   repository = "https://kubernetes-charts-incubator.storage.googleapis.com"
+#   chart      = "raw"
 
-  namespace = "kube-ingress"
-  name      = "cert-manager-issuers"
+#   namespace = "kube-ingress"
+#   name      = "cert-manager-issuers"
 
-  values = [
-    file("./values/kube-ingress/cert-manager-issuers.yaml")
-  ]
+#   values = [
+#     file("./values/kube-ingress/cert-manager-issuers.yaml")
+#   ]
 
-  wait = false
+#   wait = false
 
-  create_namespace = true
+#   create_namespace = true
 
-  depends_on = [
-    helm_release.cert-manager,
-  ]
-}
+#   depends_on = [
+#     helm_release.cert-manager,
+#   ]
+# }

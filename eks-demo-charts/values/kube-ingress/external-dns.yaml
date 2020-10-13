@@ -2,7 +2,7 @@ nameOverride: external-dns
 
 sources:
   - service
-#  - ingress
+  # - ingress
 
 tolerations:
   - key: node-role

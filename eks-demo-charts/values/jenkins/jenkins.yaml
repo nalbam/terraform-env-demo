@@ -33,10 +33,10 @@ master:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
     hostName: "jenkins.bruce.spic.me"
-    tls:
-      - secretName: jenkins-tls
-        hosts:
-          - "jenkins.bruce.spic.me"
+    # tls:
+    #   - secretName: jenkins-tls
+    #     hosts:
+    #       - "jenkins.bruce.spic.me"
 
   # https://github.com/helm/charts/blob/master/stable/jenkins/values.yaml
   installPlugins:

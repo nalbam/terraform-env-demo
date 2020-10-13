@@ -2,6 +2,10 @@ nameOverride: atlantis
 
 orgWhitelist: "github.com/nalbam/*"
 
+image:
+  repository: runatlantis/atlantis
+  tag: v0.15.0
+
 github:
   user: nalbam-bot
   token: GITHUB_TOKEN
@@ -16,7 +20,7 @@ ingress:
   annotations:
     # cert-manager.io/cluster-issuer: "letsencrypt-issuer"
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
   host: "atlantis.bruce.spic.me"
   path: "/"

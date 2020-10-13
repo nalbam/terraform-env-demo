@@ -46,10 +46,10 @@ server:
       # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
     hosts:
       - "argo.bruce.spic.me"
-    tls:
-      - secretName: argo-tls
-        hosts:
-          - "argo.bruce.spic.me"
+    # tls:
+    #   - secretName: argo-tls
+    #     hosts:
+    #       - "argo.bruce.spic.me"
 
   tolerations:
     - key: node-role

@@ -17,6 +17,9 @@ rules:
         as: "${1}"
       metricsQuery: "sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)"
 
+# podAnnotations:
+#   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+
 tolerations:
   - key: node-role
     operator: Equal
@@ -32,6 +35,3 @@ affinity:
               operator: In
               values:
                 - ops
-
-podAnnotations:
-  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"

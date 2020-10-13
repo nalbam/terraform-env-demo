@@ -19,6 +19,22 @@ data "aws_ssm_parameter" "admin_password" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "admin_password")
 }
 
+data "aws_ssm_parameter" "google_client_id" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "google_client_id")
+}
+
+data "aws_ssm_parameter" "google_client_secret" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "google_client_secret")
+}
+
+data "aws_ssm_parameter" "github_client_id" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_client_id")
+}
+
+data "aws_ssm_parameter" "github_client_secret" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_client_secret")
+}
+
 data "aws_ssm_parameter" "github_user" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_user")
 }
@@ -27,8 +43,8 @@ data "aws_ssm_parameter" "github_token" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_token")
 }
 
-data "aws_ssm_parameter" "slack_token" {
-  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "slack_token")
+data "aws_ssm_parameter" "github_secret" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "github_secret")
 }
 
 data "aws_ssm_parameter" "datadog_api_key" {
@@ -37,6 +53,10 @@ data "aws_ssm_parameter" "datadog_api_key" {
 
 data "aws_ssm_parameter" "datadog_app_key" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "datadog_app_key")
+}
+
+data "aws_ssm_parameter" "slack_token" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "slack_token")
 }
 
 data "aws_ssm_parameter" "logzio_token" {

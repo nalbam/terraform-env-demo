@@ -5,6 +5,9 @@ resource "kubernetes_namespace" "jenkins" {
 
   metadata {
     name = "jenkins"
+    labels = {
+      name = "jenkins"
+    }
   }
 }
 

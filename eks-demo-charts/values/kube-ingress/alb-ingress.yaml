@@ -1,0 +1,31 @@
+nameOverride: alb-ingress
+
+clusterName: eks-demo
+
+# awsRegion: "ap-northeast-2"
+
+autoDiscoverAwsRegion: true
+
+# awsVpcID: "vpc-xxx"
+
+autoDiscoverAwsVpcID: true
+
+rbac:
+  serviceAccount:
+    annotations: {}
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: ops
+    effect: NoSchedule
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - svc

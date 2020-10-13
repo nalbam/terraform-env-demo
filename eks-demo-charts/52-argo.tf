@@ -18,15 +18,15 @@ resource "helm_release" "argo" {
     file("./values/argo/argo.yaml")
   ]
 
-  set {
-    name  = "controller.serviceAccountAnnotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_asg.arn
-  }
+  # set {
+  #   name  = "controller.serviceAccountAnnotations.eks\\.amazonaws\\.com/role-arn"
+  #   value = module.irsa_asg.arn
+  # }
 
-  set {
-    name  = "server.serviceAccountAnnotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_asg.arn
-  }
+  # set {
+  #   name  = "server.serviceAccountAnnotations.eks\\.amazonaws\\.com/role-arn"
+  #   value = module.irsa_asg.arn
+  # }
 
   set {
     name  = "server.ingress.enabled"
@@ -51,7 +51,7 @@ resource "helm_release" "argo" {
 }
 
 resource "helm_release" "argo-gatekeeper" {
-  count = var.argo_enabled ? var.argo_gatekeeper ? 1 : 0 : 0
+  count = var.argo_enabled ? var.keycloak_enabled ? var.argo_gatekeeper ? 1 : 0 : 0 : 0
 
   repository = "https://gabibbo97.github.io/charts/"
   chart      = "keycloak-gatekeeper"

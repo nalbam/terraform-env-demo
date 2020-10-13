@@ -1,7 +1,7 @@
 nameOverride: docker-registry
 
 podAnnotations:
-  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+  # cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
   iam.amazonaws.com/role: "eks-demo-bucket"
 
 storage: s3
@@ -30,7 +30,7 @@ ingress:
   hosts:
     - "registry.bruce.spic.me"
   path: /
-  tls:
-    - secretName: docker-registry-tls
-      hosts:
-        - "registry.bruce.spic.me"
+  # tls:
+  #   - secretName: docker-registry-tls
+  #     hosts:
+  #       - "registry.bruce.spic.me"

@@ -5,6 +5,9 @@ resource "kubernetes_namespace" "devops" {
 
   metadata {
     name = "devops"
+    labels = {
+      name = "devops"
+    }
   }
 }
 

@@ -1,42 +1,4 @@
-# monitor
-
-resource "helm_release" "grafana" {
-  count = var.grafana_enabled ? 1 : 0
-
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "grafana"
-  version    = var.stable_grafana
-
-  namespace = "monitor"
-  name      = "grafana"
-
-  values = [
-    file("./values/monitor/grafana.yaml")
-  ]
-
-  set {
-    name  = "adminUser"
-    value = local.admin_username
-  }
-
-  set {
-    name  = "adminPassword"
-    value = local.admin_password
-  }
-
-  set {
-    name  = "persistence.storageClassName"
-    value = local.storage_class
-  }
-
-  wait = false
-
-  create_namespace = true
-
-  depends_on = [
-    helm_release.efs-provisioner,
-  ]
-}
+# prometheus
 
 resource "helm_release" "prometheus-operator" {
   count = var.prometheus_enabled ? 1 : 0
@@ -104,40 +66,6 @@ resource "helm_release" "prometheus-adapter" {
   values = [
     file("./values/monitor/prometheus-adapter.yaml")
   ]
-
-  wait = false
-
-  create_namespace = true
-}
-
-resource "helm_release" "datadog" {
-  count = var.datadog_enabled ? 1 : 0
-
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "datadog"
-  version    = var.stable_datadog
-
-  namespace = "monitor"
-  name      = "datadog"
-
-  values = [
-    file("./values/monitor/datadog.yaml")
-  ]
-
-  set {
-    name  = "datadog.clusterName"
-    value = var.cluster_name
-  }
-
-  set {
-    name  = "datadog.apiKey"
-    value = data.aws_ssm_parameter.datadog_api_key.value
-  }
-
-  set {
-    name  = "datadog.appKey"
-    value = data.aws_ssm_parameter.datadog_app_key.value
-  }
 
   wait = false
 

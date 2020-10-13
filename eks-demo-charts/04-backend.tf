@@ -1,6 +1,7 @@
 # backend
 
 # terraform {
+#   required_version = ">= 0.12"
 #   backend "s3" {
 #     region         = "ap-northeast-2"
 #     bucket         = "terraform-workshop-082867736673"
@@ -8,7 +9,6 @@
 #     dynamodb_table = "terraform-workshop-082867736673"
 #     encrypt        = true
 #   }
-#   required_version = ">= 0.12"
 # }
 
 # data "terraform_remote_state" "eks" {
@@ -21,13 +21,13 @@
 # }
 
 terraform {
+  required_version = ">= 0.12"
   backend "remote" {
     organization = "bruce"
     workspaces {
       name = "eks-demo-charts"
     }
   }
-  required_version = ">= 0.12"
 }
 
 data "terraform_remote_state" "eks" {

@@ -23,7 +23,7 @@ resource "helm_release" "weave-scope" {
 }
 
 resource "helm_release" "weave-scope-gatekeeper" {
-  count = var.weave_scope_enabled ? var.weave_scope_gatekeeper ? 1 : 0 : 0
+  count = var.keycloak_enabled ? var.weave_scope_enabled ? var.weave_scope_gatekeeper ? 1 : 0 : 0 : 0
 
   repository = "https://gabibbo97.github.io/charts/"
   chart      = "keycloak-gatekeeper"

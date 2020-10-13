@@ -25,7 +25,7 @@ resource "helm_release" "cluster-autoscaler" {
 
   set {
     name  = "rbac.serviceAccountAnnotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_asg.arn
+    value = module.irsa_cluster_autoscaler.arn
   }
 
   wait = false
@@ -59,7 +59,7 @@ resource "helm_release" "efs-provisioner" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_efs.arn
+    value = module.irsa_efs_provisioner.arn
   }
 }
 
@@ -82,7 +82,7 @@ resource "helm_release" "k8s-spot-termination-handler" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.irsa_asg.arn
+    value = module.irsa_k8s_spot_termination_handler.arn
   }
 
   set {
@@ -132,7 +132,7 @@ resource "helm_release" "metrics-server" {
 
 #   set {
 #     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-#     value = module.irsa_ssm.arn
+#     value = module.irsa_external_secrets.arn
 #   }
 
 #   wait = false

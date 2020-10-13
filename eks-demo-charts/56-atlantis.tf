@@ -1,5 +1,9 @@
 # atlantis
 
+locals {
+  atlantis_url = format("https://atlantis.%s", local.base_domain)
+}
+
 resource "helm_release" "atlantis" {
   count = var.atlantis_enabled ? 1 : 0
 
@@ -15,6 +19,11 @@ resource "helm_release" "atlantis" {
   ]
 
   set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = module.irsa_atlantis.arn
+  }
+
+  set {
     name  = "github.user"
     value = data.aws_ssm_parameter.github_user.value
   }
@@ -26,12 +35,16 @@ resource "helm_release" "atlantis" {
 
   set {
     name  = "github.secret"
-    value = join("", random_id.webhook.*.hex)
+    value = data.aws_ssm_parameter.github_secret.value
   }
 
   create_namespace = true
 }
 
-resource "random_id" "webhook" {
-  byte_length = "64"
+output "atlantis_webhook_url" {
+  value = var.atlantis_enabled ? format("https://%s/events", local.atlantis_url) : ""
+}
+
+output "atlantis_webhook_secret" {
+  value = var.atlantis_enabled ? data.aws_ssm_parameter.github_secret.value : ""
 }

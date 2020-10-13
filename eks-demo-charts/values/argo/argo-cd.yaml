@@ -46,10 +46,10 @@ server:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
     hosts:
       - "argocd.bruce.spic.me"
-    tls:
-      - secretName: argocd-server-tls
-        hosts:
-          - "argocd.bruce.spic.me"
+    # tls:
+    #   - secretName: argocd-server-tls
+    #     hosts:
+    #       - "argocd.bruce.spic.me"
     https: false
 
   ingressGrpc:
@@ -62,10 +62,10 @@ server:
       # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
     hosts:
       - "argocd-grpc.bruce.spic.me"
-    tls:
-      - secretName: argocd-grpc-server-tls
-        hosts:
-          - "argocd-grpc.bruce.spic.me"
+    # tls:
+    #   - secretName: argocd-server-grpc-tls
+    #     hosts:
+    #       - "argocd-grpc.bruce.spic.me"
     https: false
 
   tolerations:
@@ -101,23 +101,12 @@ server:
         type: helm
         url: https://opspresso.github.io/helm-charts
 
-    # https://argoproj.github.io/argo-cd/operator-manual/user-management/keycloak/
-    oidc.config: |
-      name: SSO
-      clientID: 'argo-cd'
-      clientSecret: 'd91fdbbc-5dbb-43ab-b388-ce4170ff79c6'
-      issuer: 'https://keycloak.bruce.spic.me/auth/realms/demo'
-      requestedScopes:
-        - openid
-        - email
-        - profile
-        - groups
-
   # https://argoproj.github.io/argo-cd/operator-manual/rbac/
   rbacConfig:
     policy.default: role:readonly
     policy.csv: |
       g, "/admin", role:admin
+      g, "me@nalbam.com", role:admin
 
   additionalApplications: []
 

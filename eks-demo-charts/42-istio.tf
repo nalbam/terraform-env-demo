@@ -4,7 +4,7 @@
 # istioctl manifest generate --set profile=demo | kubectl delete -f -
 
 resource "helm_release" "kiali-gatekeeper" {
-  count = var.kiali_gatekeeper ? 1 : 0
+  count = var.keycloak_enabled ? var.kiali_gatekeeper ? 1 : 0 : 0
 
   repository = "https://gabibbo97.github.io/charts/"
   chart      = "keycloak-gatekeeper"
@@ -27,7 +27,7 @@ resource "helm_release" "kiali-gatekeeper" {
 }
 
 resource "helm_release" "tracing-gatekeeper" {
-  count = var.tracing_gatekeeper ? 1 : 0
+  count = var.keycloak_enabled ? var.tracing_gatekeeper ? 1 : 0 : 0
 
   repository = "https://gabibbo97.github.io/charts/"
   chart      = "keycloak-gatekeeper"

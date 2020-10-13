@@ -1,12 +1,16 @@
 # keycloak
 
 resource "kubernetes_namespace" "keycloak" {
+  count = var.keycloak_enabled ? 1 : 0
+
   metadata {
     name = "keycloak"
   }
 }
 
 resource "kubernetes_secret" "keycloak-admin" {
+  count = var.keycloak_enabled ? 1 : 0
+
   metadata {
     namespace = "keycloak"
     name      = "keycloak-admin"
@@ -25,6 +29,8 @@ resource "kubernetes_secret" "keycloak-admin" {
 }
 
 resource "kubernetes_secret" "keycloak-realm" {
+  count = var.keycloak_enabled ? 1 : 0
+
   metadata {
     namespace = "keycloak"
     name      = "keycloak-realm"
@@ -42,6 +48,8 @@ resource "kubernetes_secret" "keycloak-realm" {
 }
 
 resource "helm_release" "keycloak" {
+  count = var.keycloak_enabled ? 1 : 0
+
   repository = "https://codecentric.github.io/helm-charts"
   chart      = "keycloak"
   version    = "8.3.0" # var.codecentric_keycloak

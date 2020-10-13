@@ -13,10 +13,10 @@ ingress:
     - host: "keycloak.bruce.spic.me"
       paths:
         - /
-  tls:
-    - secretName: keycloak-tls
-      hosts:
-        - "keycloak.bruce.spic.me"
+  # tls:
+  #   - secretName: keycloak-tls
+  #     hosts:
+  #       - "keycloak.bruce.spic.me"
 
 # podAnnotations:
 #   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"

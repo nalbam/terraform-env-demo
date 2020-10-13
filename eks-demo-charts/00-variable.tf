@@ -27,8 +27,36 @@ variable "acm_arn" {
   default = ""
 }
 
+variable "vpc_id" {
+  default = ""
+}
+
 variable "efs_id" {
   default = ""
+}
+
+### sso ###
+
+variable "sso" {
+  default = "google" # keycloak, google, github
+}
+
+variable "sso_allowed_domains" {
+  default = "nalbam.com daangn.com"
+}
+
+variable "sso_allowed_organizations" {
+  default = "nalbam daangn"
+}
+
+variable "sso_team_ids" {
+  default = "sre devops"
+}
+
+### keycloak ###
+
+variable "keycloak_enabled" {
+  default = false
 }
 
 ### argo ###
@@ -42,48 +70,30 @@ variable "argo_events_enabled" {
 }
 
 variable "argo_cd_enabled" {
-  default = false
+  default = true
 }
 
 variable "argo_cd_apps_enabled" {
-  default = false
+  default = true
 }
 
 ### monitor ###
 
 variable "grafana_enabled" {
-  default = false
+  default = true
 }
 
 variable "prometheus_enabled" {
-  default = false
+  default = true
 }
 
 variable "datadog_enabled" {
-  default = false
+  default = true
 }
 
 ### logging ###
 
 variable "fluentd_enabled" {
-  default = false
-}
-
-### etc ###
-
-variable "chaoskube_enabled" {
-  default = false
-}
-
-variable "appmesh_enabled" {
-  default = false
-}
-
-variable "weave_scope_enabled" {
-  default = false
-}
-
-variable "cert_manager_enabled" {
   default = false
 }
 
@@ -120,6 +130,24 @@ variable "nexus_enabled" {
 }
 
 variable "sonarqube_enabled" {
+  default = false
+}
+
+### etc ###
+
+variable "chaoskube_enabled" {
+  default = false
+}
+
+variable "appmesh_enabled" {
+  default = false
+}
+
+variable "weave_scope_enabled" {
+  default = false
+}
+
+variable "cert_manager_enabled" {
   default = false
 }
 

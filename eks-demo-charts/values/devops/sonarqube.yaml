@@ -12,13 +12,13 @@ ingress:
   hosts:
     - name: "sonarqube.bruce.spic.me"
       path: /
-  tls:
-    - secretName: sonarqube-tls
-      hosts:
-        - "sonarqube.bruce.spic.me"
+  # tls:
+  #   - secretName: sonarqube-tls
+  #     hosts:
+  #       - "sonarqube.bruce.spic.me"
 
-annotations:
-  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+# annotations:
+#   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
 
 plugins:
   install:

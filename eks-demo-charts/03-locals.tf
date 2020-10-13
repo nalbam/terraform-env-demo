@@ -12,6 +12,8 @@ locals {
 
   acm_arn = var.acm_arn != "" ? var.acm_arn : data.terraform_remote_state.eks.outputs.acm_arn
 
+  vpc_id = var.vpc_id != "" ? var.vpc_id : data.terraform_remote_state.eks.outputs.vpc_id
+
   efs_id = var.efs_id != "" ? var.efs_id : data.terraform_remote_state.eks.outputs.efs_id
 
   storage_class = local.efs_id == "" ? "default" : "efs"

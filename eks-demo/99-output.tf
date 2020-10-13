@@ -32,6 +32,14 @@ output "eks_oidc_arn" {
   value = module.eks.oidc_arn
 }
 
+output "vpc_id" {
+  value = module.eks.vpc_id
+}
+
+output "subnet_ids" {
+  value = module.eks.subnet_ids
+}
+
 output "efs_id" {
   value = module.eks.efs_id
 }

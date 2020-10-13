@@ -7,17 +7,17 @@ controller:
     real-ip-header: "proxy_protocol"
     set-real-ip-from: "0.0.0.0/0"
     use-forwarded-headers: "true"
-  #   # for aws-nlb
-  #   ssl-redirect: "false" # we use `special` port to control ssl redirection
-  #   server-snippet: |
-  #     listen 8000;
-  #     if ( $server_port = 80 ) {
-  #        return 308 https://$host$request_uri;
-  #     }
-  # containerPort:
-  #   http: 80
-  #   https: 443
-  #   special: 8000
+    # for aws-nlb
+    ssl-redirect: "false" # we use `special` port to control ssl redirection
+    server-snippet: |
+      listen 8000;
+      if ( $server_port = 80 ) {
+         return 308 https://$host$request_uri;
+      }
+  containerPort:
+    http: 80
+    https: 443
+    special: 8000
   service:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: ""
@@ -27,7 +27,7 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
       service.beta.kubernetes.io/aws-load-balancer-ssl-cert: ""
       service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
-      # service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     targetPorts:
       http: http
       https: http

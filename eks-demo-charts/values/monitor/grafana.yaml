@@ -12,13 +12,13 @@ ingress:
     # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
   hosts:
     - "grafana.bruce.spic.me"
-  tls:
-    - secretName: grafana-tls
-      hosts:
-        - "grafana.bruce.spic.me"
+  # tls:
+  #   - secretName: grafana-tls
+  #     hosts:
+  #       - "grafana.bruce.spic.me"
 
-podAnnotations:
-  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+# podAnnotations:
+#   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
 
 tolerations:
   - key: node-role
@@ -41,15 +41,41 @@ grafana.ini:
     root_url: "https://grafana.bruce.spic.me/"
   auth:
     disable_login_form: true
+
+  # https://grafana.com/docs/grafana/latest/auth/generic-oauth/
   auth.generic_oauth:
     enabled: true
+    allow_sign_up: true
     client_id: "grafana"
     client_secret: "df7d395f-e833-49b6-b19c-eea8a54fb06a"
+    scopes: "openid email profile roles"
     auth_url: "https://keycloak.bruce.spic.me/auth/realms/demo/protocol/openid-connect/auth"
     token_url: "https://keycloak.bruce.spic.me/auth/realms/demo/protocol/openid-connect/token"
     api_url: "https://keycloak.bruce.spic.me/auth/realms/demo/protocol/openid-connect/userinfo"
-    scopes: "openid email profile roles"
-    allow_sign_up: "true"
+
+  # https://grafana.com/docs/grafana/latest/auth/google/
+  auth.google:
+    enabled: false
+    allow_sign_up: true
+    client_id: GOOGLE_CLIENT_ID
+    client_secret: GOOGLE_CLIENT_SECRET
+    scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+    auth_url: https://accounts.google.com/o/oauth2/auth
+    token_url: https://accounts.google.com/o/oauth2/token
+    allowed_domains: nalbam.com
+
+  # https://grafana.com/docs/grafana/latest/auth/github/
+  auth.github:
+    enabled: false
+    allow_sign_up: true
+    client_id: GITHUB_CLIENT_ID
+    client_secret: GITHUB_CLIENT_SECRET
+    scopes: user:email,read:org
+    auth_url: https://github.com/login/oauth/authorize
+    token_url: https://github.com/login/oauth/access_token
+    api_url: https://api.github.com/user
+    allowed_organizations:
+    team_ids:
 
 sidecar:
   dashboards:

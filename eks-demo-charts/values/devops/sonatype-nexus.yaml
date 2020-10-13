@@ -15,8 +15,8 @@ nexus:
       cpu: 1200m
       memory: 3Gi
 
-  podAnnotations:
-    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+  # podAnnotations:
+  #   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
 
   livenessProbe:
     initialDelaySeconds: 60
@@ -38,9 +38,9 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
-  tls:
-    enabled: true
-    secretName: sonatype-nexus-tls
+  # tls:
+  #   enabled: true
+  #   secretName: sonatype-nexus-tls
 
 nexusProxy:
   env:

@@ -2,10 +2,6 @@ nameOverride: harbor
 
 expose:
   type: ingress
-  tls:
-    enabled: true
-    secretName: "harbor-core-tls"
-    notarySecretName: "harbor-notary-tls"
   ingress:
     hosts:
       core: "harbor-core.bruce.spic.me"
@@ -18,6 +14,10 @@ expose:
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       # nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+  # tls:
+  #   enabled: true
+  #   secretName: "harbor-core-tls"
+  #   notarySecretName: "harbor-notary-tls"
 
 externalURL: "https://harbor-core.bruce.spic.me"
 
@@ -25,17 +25,17 @@ harborAdminPassword: "password"
 
 core:
   podAnnotations:
-    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+    # cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
     iam.amazonaws.com/role: "eks-demo-bucket"
 
 registry:
   podAnnotations:
-    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+    # cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
     iam.amazonaws.com/role: "eks-demo-bucket"
 
 chartmuseum:
   podAnnotations:
-    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+    # cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
     iam.amazonaws.com/role: "eks-demo-bucket"
 
 persistence:
