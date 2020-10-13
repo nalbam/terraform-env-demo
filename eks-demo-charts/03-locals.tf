@@ -5,10 +5,13 @@ locals {
 }
 
 locals {
-  root_domain = var.root_domain != "" ? var.root_domain : data.terraform_remote_state.eks.outputs.root_domain
-  base_domain = var.base_domain != "" ? var.base_domain : data.terraform_remote_state.eks.outputs.base_domain
+  domain_name = var.domain_name != "" ? var.domain_name : data.terraform_remote_state.eks.outputs.domain_name
 
-  hostname = "*.${local.base_domain}"
+  domain_public   = local.domain_name # format("pub.%s", local.domain_name)
+  domain_internal = format("in.%s", local.domain_name)
+
+  hostname_public   = format("*.%s", local.domain_public)
+  hostname_internal = format("*.%s", local.domain_internal)
 
   acm_arn = var.acm_arn != "" ? var.acm_arn : data.terraform_remote_state.eks.outputs.acm_arn
 
@@ -27,13 +30,13 @@ locals {
 
 locals {
   domain = {
-    jenkins     = var.jenkins_enabled ? "jenkins.${local.base_domain}" : ""
-    chartmuseum = var.chartmuseum_enabled ? "chartmuseum.${local.base_domain}" : ""
-    registry    = var.registry_enabled ? "registry.${local.base_domain}" : ""
-    harbor      = var.harbor_enabled ? "harbor-core.${local.base_domain}" : ""
-    archiva     = var.archiva_enabled ? "archiva.${local.base_domain}" : ""
-    nexus       = var.nexus_enabled ? "nexus.${local.base_domain}" : ""
-    sonarqube   = var.sonarqube_enabled ? "sonarqube.${local.base_domain}" : ""
+    jenkins     = var.jenkins_enabled ? "jenkins.${local.domain_public}" : ""
+    chartmuseum = var.chartmuseum_enabled ? "chartmuseum.${local.domain_public}" : ""
+    registry    = var.registry_enabled ? "registry.${local.domain_public}" : ""
+    harbor      = var.harbor_enabled ? "harbor-core.${local.domain_public}" : ""
+    archiva     = var.archiva_enabled ? "archiva.${local.domain_public}" : ""
+    nexus       = var.nexus_enabled ? "nexus.${local.domain_public}" : ""
+    sonarqube   = var.sonarqube_enabled ? "sonarqube.${local.domain_public}" : ""
   }
 }
 

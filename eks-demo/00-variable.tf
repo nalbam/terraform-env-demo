@@ -114,10 +114,6 @@ variable "key_path" {
   default     = ""
 }
 
-variable "root_domain" {
-  default = "bruce.spic.me"
-}
-
-variable "base_domain" {
+variable "domain_name" {
   default = "bruce.spic.me"
 }

@@ -1,7 +1,7 @@
 # atlantis
 
 locals {
-  atlantis_url = format("https://atlantis.%s", local.base_domain)
+  atlantis_domain = format("atlantis.%s", local.domain_public)
 }
 
 resource "helm_release" "atlantis" {
@@ -42,7 +42,7 @@ resource "helm_release" "atlantis" {
 }
 
 output "atlantis_webhook_url" {
-  value = var.atlantis_enabled ? format("https://%s/events", local.atlantis_url) : ""
+  value = var.atlantis_enabled ? format("https://atlantis.%s/events", local.atlantis_domain) : ""
 }
 
 output "atlantis_webhook_secret" {

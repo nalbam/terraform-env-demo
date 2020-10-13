@@ -16,7 +16,7 @@ export CLUSTER_NAME="eks-demo"
 export CLUSTER_ROLE="devops"
 
 # for ingress
-export ROOT_DOMAIN="spic.me" # nalbam.com
+export DOMAIN_NAME="spic.me" # nalbam.com
 export BASE_DOMAIN="demo.spic.me" # demo.nalbam.com
 
 # for keycloak, jenkins, grafana, argo-cd

@@ -27,25 +27,35 @@ resource "helm_release" "alb-ingress" {
   create_namespace = true
 }
 
-resource "helm_release" "nginx-ingress" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "nginx-ingress"
-  version    = var.stable_nginx_ingress
+resource "helm_release" "ingress-nginx" {
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  version    = var.ingress_nginx_ingress_nginx
 
   namespace = "kube-ingress"
-  name      = "nginx-ingress"
+  name      = "ingress-nginx"
 
   values = [
-    file("./values/kube-ingress/nginx-ingress.yaml")
+    file("./values/kube-ingress/ingress-nginx.yaml")
   ]
 
   set {
     name  = "controller.service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
-    value = local.hostname
+    value = local.hostname_public
   }
 
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
+    value = local.acm_arn
+  }
+
+  set {
+    name  = "controller.service.internal.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
+    value = local.hostname_internal
+  }
+
+  set {
+    name  = "controller.service.internal.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
     value = local.acm_arn
   }
 
@@ -57,6 +67,37 @@ resource "helm_release" "nginx-ingress" {
     helm_release.prometheus-operator,
   ]
 }
+
+# resource "helm_release" "nginx-ingress" {
+#   repository = "https://kubernetes-charts.storage.googleapis.com"
+#   chart      = "nginx-ingress"
+#   version    = var.stable_nginx_ingress
+
+#   namespace = "kube-ingress"
+#   name      = "nginx-ingress"
+
+#   values = [
+#     file("./values/kube-ingress/nginx-ingress.yaml")
+#   ]
+
+#   set {
+#     name  = "controller.service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
+#     value = local.hostname
+#   }
+
+#   set {
+#     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
+#     value = local.acm_arn
+#   }
+
+#   wait = false
+
+#   create_namespace = true
+
+#   depends_on = [
+#     helm_release.prometheus-operator,
+#   ]
+# }
 
 resource "helm_release" "external-dns" {
   repository = "https://charts.bitnami.com/bitnami"

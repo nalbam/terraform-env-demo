@@ -69,7 +69,7 @@ data "template_file" "jenkins-env" {
     cluster     = var.cluster_name
     role        = var.cluster_role
     slack_token = local.slack_token
-    base_domain = local.base_domain
+    base_domain = local.domain_public
     jenkins     = local.domain.jenkins
     harbor      = local.domain.harbor
     archiva     = local.domain.archiva

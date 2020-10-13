@@ -34,7 +34,8 @@ module "db" {
   allow_ip_address = local.allow_ip_address
 
   # subnet group
-  subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids
+  # subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids
+  subnet_ids = data.terraform_remote_state.vpc.outputs.public_subnet_ids
 
   # parameter group
   family = var.db_family

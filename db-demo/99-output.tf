@@ -21,9 +21,17 @@ output "name" {
 }
 
 output "username" {
-  value = module.db.username
+  value = local.db_username
+}
+
+output "password" {
+  value = local.db_password
 }
 
 output "security_group_id" {
   value = module.db.security_group_id
+}
+
+output "allow_ip_address" {
+  value = local.allow_ip_address
 }

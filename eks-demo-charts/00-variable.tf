@@ -15,11 +15,7 @@ variable "cluster_role" {
   default     = "devops"
 }
 
-variable "root_domain" {
-  default = ""
-}
-
-variable "base_domain" {
+variable "domain_name" {
   default = ""
 }
 
@@ -33,6 +29,12 @@ variable "vpc_id" {
 
 variable "efs_id" {
   default = ""
+}
+
+### ingress ###
+
+variable "ingress_controller" {
+  default = "" # ingress-nginx, nginx-ingress, alb-ingress
 }
 
 ### sso ###

@@ -15,6 +15,7 @@ locals {
 
   allow_ip_address = concat(
     data.terraform_remote_state.vpc.outputs.private_subnet_cidr,
-    formatlist("%s/32", data.terraform_remote_state.vpc.outputs.nat_gateway_ips),
+    # formatlist("%s/32", data.terraform_remote_state.vpc.outputs.nat_gateway_ips),
+    ["121.136.56.224/32"], # echo "$(curl -sL icanhazip.com)/32"
   )
 }
