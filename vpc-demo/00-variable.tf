@@ -48,7 +48,7 @@ variable "public_subnets" {
       zone = "ap-northeast-2a"
       cidr = "10.10.1.0/24"
       tags = {
-        "kubernetes.io/role/elb" = ""
+        "kubernetes.io/role/elb" = "1"
       }
     },
     {
@@ -56,7 +56,7 @@ variable "public_subnets" {
       zone = "ap-northeast-2b"
       cidr = "10.10.2.0/24"
       tags = {
-        "kubernetes.io/role/elb" = ""
+        "kubernetes.io/role/elb" = "1"
       }
     },
     {
@@ -64,7 +64,7 @@ variable "public_subnets" {
       zone = "ap-northeast-2c"
       cidr = "10.10.3.0/24"
       tags = {
-        "kubernetes.io/role/elb" = ""
+        "kubernetes.io/role/elb" = "1"
       }
     },
   ]
@@ -82,19 +82,25 @@ variable "private_subnets" {
       name = "private-a"
       zone = "ap-northeast-2a"
       cidr = "10.10.5.0/24"
-      tags = {}
+      tags = {
+        "kubernetes.io/role/internal-elb" = "1"
+      }
     },
     {
       name = "private-b"
       zone = "ap-northeast-2b"
       cidr = "10.10.6.0/24"
-      tags = {}
+      tags = {
+        "kubernetes.io/role/internal-elb" = "1"
+      }
     },
     {
       name = "private-c"
       zone = "ap-northeast-2c"
       cidr = "10.10.7.0/24"
-      tags = {}
+      tags = {
+        "kubernetes.io/role/internal-elb" = "1"
+      }
     },
   ]
 }

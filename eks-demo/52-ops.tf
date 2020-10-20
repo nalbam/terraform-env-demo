@@ -2,17 +2,14 @@
 
 module "ops" {
   source  = "nalbam/eks-worker/aws"
-  version = "0.12.38"
+  version = "0.12.39"
 
   region = var.region
 
-  name = "${module.eks.name}-ops"
+  name = format("%s-ops", module.eks.name)
 
   cluster_name = module.eks.name
 
-  kubernetes_version = module.eks.version
-
-  worker_ami_id    = module.eks.worker_ami_id
   worker_role_name = module.eks.worker_role_name
 
   worker_security_group_ids = [module.eks.worker_security_group_id]
@@ -30,7 +27,7 @@ module "ops" {
   launch_each_subnet          = var.launch_each_subnet
   associate_public_ip_address = var.associate_public_ip_address
 
-  autoscale_enable = true
+  # autoscale_enable = true
 
   instance_type   = var.instance_type
   mixed_instances = var.mixed_instances

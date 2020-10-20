@@ -102,7 +102,7 @@ variable "fluentd_enabled" {
 ### atlantis ###
 
 variable "atlantis_enabled" {
-  default = true
+  default = false
 }
 
 ### devops ###

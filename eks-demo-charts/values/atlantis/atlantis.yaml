@@ -2,9 +2,9 @@ nameOverride: atlantis
 
 orgWhitelist: "github.com/nalbam/*"
 
-image:
-  repository: runatlantis/atlantis
-  tag: v0.15.0
+# image:
+#   repository: runatlantis/atlantis
+#   tag: v0.15.0
 
 github:
   user: nalbam-bot

@@ -12,7 +12,7 @@ variable "name" {
 
 variable "kubernetes_version" {
   description = "쿠버네티스 버전을 입력합니다."
-  default     = "1.16"
+  default     = "1.18"
 }
 
 variable "cluster_log_types" {

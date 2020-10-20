@@ -56,9 +56,9 @@ output "cluster_security_group_id" {
   value = module.eks.cluster_security_group_id
 }
 
-output "worker_ami_id" {
-  value = module.eks.worker_ami_id
-}
+# output "worker_ami_id" {
+#   value = module.eks.worker_ami_id
+# }
 
 # output "worker_iam_role_arn" {
 #   value = module.eks.iam_role_arn

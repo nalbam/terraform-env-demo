@@ -19,7 +19,7 @@ variable "db_engine" {
 variable "db_engine_version" {
   description = "Database engine version"
   type        = string
-  default     = "11.6"
+  default     = "11.8"
 }
 
 variable "db_instance_type" {
