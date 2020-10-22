@@ -1,11 +1,11 @@
 {
   "variable": {
     "argo_argo": {
-      "default": "0.13.0",
+      "default": "0.13.2",
       "description": "argo/argo"
     },
     "argo_argo_cd": {
-      "default": "2.9.2",
+      "default": "2.9.3",
       "description": "argo/argo-cd"
     },
     "argo_argo_events": {
@@ -17,15 +17,15 @@
       "description": "argo/argo-rollouts"
     },
     "aws_appmesh_controller": {
-      "default": "1.1.11",
+      "default": "1.1.15",
       "description": "aws/appmesh-controller"
     },
     "bitnami_external_dns": {
-      "default": "3.4.6",
+      "default": "3.4.9",
       "description": "bitnami/external-dns"
     },
     "chaos_mesh_chaos_mesh": {
-      "default": "0.3.0",
+      "default": "0.3.1",
       "description": "chaos-mesh/chaos-mesh"
     },
     "codecentric_keycloak": {
@@ -49,11 +49,11 @@
       "description": "incubator/aws-alb-ingress-controller"
     },
     "ingress_nginx_ingress_nginx": {
-      "default": "3.7.0",
+      "default": "3.7.1",
       "description": "ingress-nginx/ingress-nginx"
     },
     "jetstack_cert_manager": {
-      "default": "1.0.3",
+      "default": "1.1.0-alpha.0",
       "description": "jetstack/cert-manager"
     },
     "kiwigrid_fluentd_elasticsearch": {

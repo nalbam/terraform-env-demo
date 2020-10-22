@@ -2,7 +2,7 @@
 
 module "ops" {
   source  = "nalbam/eks-worker/aws"
-  version = "0.12.39"
+  version = "0.12.45"
 
   region = var.region
 
@@ -12,7 +12,7 @@ module "ops" {
 
   worker_role_name = module.eks.worker_role_name
 
-  worker_security_group_ids = [module.eks.worker_security_group_id]
+  worker_security_groups = [module.eks.worker_security_group_id]
 
   vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
 

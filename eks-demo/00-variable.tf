@@ -23,7 +23,7 @@ variable "cluster_log_types" {
 
 variable "cluster_log_retention_in_days" {
   description = "로그 저장 기간을 입력 합니다."
-  default     = 14
+  default     = 7
 }
 
 variable "allow_ip_address" {

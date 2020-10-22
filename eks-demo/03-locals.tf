@@ -8,37 +8,28 @@ locals {
   name = var.name
 
   workers = [
-    format("arn:aws:iam::%s:role/%s-%s", local.account_id, var.name, "worker"),
+    format("%s-worker", var.name),
   ]
 
-  map_roles = [
+  roles = [
     {
-      rolearn  = "arn:aws:iam::${local.account_id}:role/dev-bastion"
-      username = "iam-role-eks-bastion"
-      groups   = ["system:masters"]
+      name = "dev-bastion"
+      groups = ["system:masters"]
     },
   ]
 
-  map_users = [
+  users = [
     {
-      userarn  = "arn:aws:iam::${local.account_id}:user/ops"
-      username = "ops"
-      groups   = ["system:masters"]
+      name = "bruce"
+      groups = ["system:masters"]
     },
     {
-      userarn  = "arn:aws:iam::${local.account_id}:user/bruce"
-      username = "bruce"
-      groups   = ["system:masters"]
+      name = "developer"
+      groups = []
     },
     {
-      userarn  = "arn:aws:iam::${local.account_id}:user/developer"
-      username = "developer"
-      groups   = []
-    },
-    {
-      userarn  = "arn:aws:iam::${local.account_id}:user/readonly"
-      username = "readonly"
-      groups   = []
+      name = "readonly"
+      groups = []
     },
   ]
 }

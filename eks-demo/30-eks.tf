@@ -2,7 +2,7 @@
 
 module "eks" {
   source  = "nalbam/eks/aws"
-  version = "0.12.63"
+  version = "0.12.68"
 
   region = var.region
 
@@ -20,8 +20,8 @@ module "eks" {
 
   workers = local.workers
 
-  map_roles = local.map_roles
-  map_users = local.map_users
+  roles = local.roles
+  users = local.users
 
   irsa_enabled = var.irsa_enabled
   efs_enabled  = var.efs_enabled
