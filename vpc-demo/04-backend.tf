@@ -6,7 +6,7 @@
 #     region         = "ap-northeast-2"
 #     bucket         = "terraform-workshop-082867736673"
 #     key            = "vpc-demo.tfstate"
-#     dynamodb_table = "terraform-workshop-082867736673"
+#     dynamodb_table = "terraform-resource-lock"
 #     encrypt        = true
 #   }
 # }
