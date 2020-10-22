@@ -5,8 +5,10 @@ OS_NAME="$(uname | awk '{print tolower($0)}')"
 # variable
 export ACCOUNT_ID=$(aws sts get-caller-identity | jq .Account -r)
 
-export REGION="ap-northeast-2"
+export REGION="$(aws configure get region)"
 export BUCKET="terraform-workshop-${1:-${ACCOUNT_ID}}"
+
+export LOCK_TABLE="terraform-resource-lock"
 
 command -v tput > /dev/null && TPUT=true
 
@@ -62,7 +64,7 @@ _main() {
     _result "REGION = ${REGION}"
     _result "BUCKET = ${BUCKET}"
 
-    _result "DOMAIN_NAME = ${DOMAIN_NAME}"
+    _result "ROOT_DOMAIN = ${ROOT_DOMAIN}"
     _result "BASE_DOMAIN = ${BASE_DOMAIN}"
 
     if [ "${BASE_DOMAIN}" == "" ]; then
@@ -76,7 +78,7 @@ _main() {
     _find_replace "s/demo.spic.me/${BASE_DOMAIN}/g" "*.yaml"
     _find_replace "s/demo.spic.me/${BASE_DOMAIN}/g" "*.json"
 
-    _find_replace "s/spic.me/${DOMAIN_NAME}/g" "*.tf"
+    _find_replace "s/spic.me/${ROOT_DOMAIN}/g" "*.tf"
 
     _find_replace "s/ADMIN_USERNAME/${ADMIN_USERNAME}/g" "*.tf"
     _find_replace "s/ADMIN_PASSWORD/${ADMIN_PASSWORD}/g" "*.tf"
@@ -94,11 +96,11 @@ _main() {
     fi
 
     # create dynamodb table
-    COUNT=$(aws dynamodb list-tables | jq -r .TableNames | grep ${BUCKET} | wc -l | xargs)
+    COUNT=$(aws dynamodb list-tables | jq -r .TableNames | grep ${LOCK_TABLE} | wc -l | xargs)
     if [ "x${COUNT}" == "x0" ]; then
-        _command "aws dynamodb create-table --table-name ${BUCKET}"
+        _command "aws dynamodb create-table --table-name ${LOCK_TABLE}"
         aws dynamodb create-table \
-            --table-name ${BUCKET} \
+            --table-name ${LOCK_TABLE} \
             --attribute-definitions AttributeName=LockID,AttributeType=S \
             --key-schema AttributeName=LockID,KeyType=HASH \
             --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
