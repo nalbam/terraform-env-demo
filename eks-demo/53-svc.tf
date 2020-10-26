@@ -2,11 +2,11 @@
 
 module "svc" {
   source  = "nalbam/eks-worker/aws"
-  version = "0.12.45"
+  version = "0.12.46"
 
   region = var.region
 
-  name = format("%s-svc", module.eks.name)
+  name = "svc"
 
   cluster_name = module.eks.name
 

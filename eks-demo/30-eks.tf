@@ -2,7 +2,7 @@
 
 module "eks" {
   source  = "nalbam/eks/aws"
-  version = "0.12.68"
+  version = "0.12.70"
 
   region = var.region
 

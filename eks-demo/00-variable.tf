@@ -29,6 +29,7 @@ variable "cluster_log_retention_in_days" {
 variable "allow_ip_address" {
   description = "접속 허용 IP 목록을 입력 합니다."
   default = [
+    "10.0.0.0/8",   # vpn
     "10.10.1.0/24", # bastion
     # "211.60.50.190/32", # echo "$(curl -sL icanhazip.com)/32"
   ]

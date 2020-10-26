@@ -5,7 +5,7 @@
       "description": "argo/argo"
     },
     "argo_argo_cd": {
-      "default": "2.9.3",
+      "default": "2.9.4",
       "description": "argo/argo-cd"
     },
     "argo_argo_events": {
@@ -29,7 +29,7 @@
       "description": "chaos-mesh/chaos-mesh"
     },
     "codecentric_keycloak": {
-      "default": "9.4.0",
+      "default": "9.5.0",
       "description": "codecentric/keycloak"
     },
     "external_secrets_kubernetes_external_secrets": {
