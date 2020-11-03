@@ -107,22 +107,27 @@ _main() {
             --region ${REGION} | jq .
     fi
 
+    export SSM_KEY="/k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}"
+
     # AWS Systems Manager > 파라미터 스토어
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/admin_username --value "${ADMIN_USERNAME}" --type SecureString --overwrite | jq .
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/admin_password --value "${ADMIN_PASSWORD}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/admin_username --value "${ADMIN_USERNAME}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/admin_password --value "${ADMIN_PASSWORD}" --type SecureString --overwrite | jq .
 
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/google_client_id --value "${GOOGLE_CLIENT_ID}" --type SecureString --overwrite | jq .
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/google_client_secret --value "${GOOGLE_CLIENT_SECRET}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/argocd_password --value "${ARGOCD_PASSWORD}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/argocd_mtime --value "${ARGOCD_MTIME}" --type SecureString --overwrite | jq .
 
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/github_client_id --value "${GITHUB_CLIENT_ID}" --type SecureString --overwrite | jq .
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/github_client_secret --value "${GITHUB_CLIENT_SECRET}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/google_client_id --value "${GOOGLE_CLIENT_ID}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/google_client_secret --value "${GOOGLE_CLIENT_SECRET}" --type SecureString --overwrite | jq .
 
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/slack_token --value "${SLACK_TOKEN}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/github_client_id --value "${GITHUB_CLIENT_ID}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/github_client_secret --value "${GITHUB_CLIENT_SECRET}" --type SecureString --overwrite | jq .
 
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/datadog_api_key --value "${DATADOG_API_KEY}" --type SecureString --overwrite | jq .
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/datadog_app_key --value "${DATADOG_APP_KEY}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/slack_token --value "${SLACK_TOKEN}" --type SecureString --overwrite | jq .
 
-    aws ssm put-parameter --name /k8s/${CLUSTER_ROLE}/${CLUSTER_NAME}/logzio_token --value "${LOGZIO_TOKEN}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/datadog_api_key --value "${DATADOG_API_KEY}" --type SecureString --overwrite | jq .
+    aws ssm put-parameter --name ${SSM_KEY}/datadog_app_key --value "${DATADOG_APP_KEY}" --type SecureString --overwrite | jq .
+
+    aws ssm put-parameter --name ${SSM_KEY}/logzio_token --value "${LOGZIO_TOKEN}" --type SecureString --overwrite | jq .
 }
 
 _main
