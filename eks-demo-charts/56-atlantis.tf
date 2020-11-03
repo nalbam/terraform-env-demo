@@ -7,7 +7,7 @@ locals {
 resource "helm_release" "atlantis" {
   count = var.atlantis_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "atlantis"
   version    = var.stable_atlantis
 

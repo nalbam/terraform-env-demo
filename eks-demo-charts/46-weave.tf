@@ -3,7 +3,7 @@
 resource "helm_release" "weave-scope" {
   count = var.weave_scope_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "weave-scope"
   version    = var.stable_weave_scope
 

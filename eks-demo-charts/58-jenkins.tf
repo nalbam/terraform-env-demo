@@ -14,7 +14,7 @@ resource "kubernetes_namespace" "jenkins" {
 resource "helm_release" "jenkins" {
   count = var.cluster_role == "devops" ? var.jenkins_enabled ? 1 : 0 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "jenkins"
   version    = var.stable_jenkins
 

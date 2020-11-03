@@ -69,7 +69,7 @@ resource "helm_release" "ingress-nginx" {
 }
 
 # resource "helm_release" "nginx-ingress" {
-#   repository = "https://kubernetes-charts.storage.googleapis.com"
+#   repository = "https://charts.helm.sh/stable"
 #   chart      = "nginx-ingress"
 #   version    = var.stable_nginx_ingress
 
@@ -145,7 +145,7 @@ resource "helm_release" "external-dns" {
 # resource "helm_release" "cert-manager-issuers" {
 #   count = var.cert_manager_enabled ? 1 : 0
 
-#   repository = "https://kubernetes-charts-incubator.storage.googleapis.com"
+#   repository = "https://charts.helm.sh/incubator"
 #   chart      = "raw"
 
 #   namespace = "kube-ingress"

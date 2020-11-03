@@ -5,6 +5,12 @@ locals {
 }
 
 locals {
+  vpc_id = var.vpc_id != "" ? var.vpc_id : data.terraform_remote_state.eks.outputs.vpc_config[0].vpc_id
+
+  efs_id = var.efs_id != "" ? var.efs_id : data.terraform_remote_state.eks.outputs.efs_id
+
+  acm_arn = var.acm_arn != "" ? var.acm_arn : data.terraform_remote_state.eks.outputs.acm_arn
+
   domain_name = var.domain_name != "" ? var.domain_name : data.terraform_remote_state.eks.outputs.domain_name
 
   domain_public   = local.domain_name # format("pub.%s", local.domain_name)
@@ -13,18 +19,12 @@ locals {
   hostname_public   = format("*.%s", local.domain_public)
   hostname_internal = format("*.%s", local.domain_internal)
 
-  acm_arn = var.acm_arn != "" ? var.acm_arn : data.terraform_remote_state.eks.outputs.acm_arn
-
-  vpc_id = var.vpc_id != "" ? var.vpc_id : data.terraform_remote_state.eks.outputs.vpc_id
-
-  efs_id = var.efs_id != "" ? var.efs_id : data.terraform_remote_state.eks.outputs.efs_id
-
   storage_class = local.efs_id == "" ? "default" : "efs"
 
   admin_username = data.aws_ssm_parameter.admin_username.value
   admin_password = data.aws_ssm_parameter.admin_password.value
 
-  slack_token =  data.aws_ssm_parameter.slack_token.value
+  slack_token = data.aws_ssm_parameter.slack_token.value
   slack_url   = format("%s%s", "https://hooks.slack.com/services/", local.slack_token)
 }
 

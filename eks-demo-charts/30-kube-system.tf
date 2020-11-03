@@ -2,7 +2,7 @@
 
 resource "helm_release" "cluster-autoscaler" {
   # repository = "https://kubernetes.github.io/autoscaler"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "cluster-autoscaler"
   version    = var.stable_cluster_autoscaler
 
@@ -36,7 +36,7 @@ resource "helm_release" "cluster-autoscaler" {
 }
 
 resource "helm_release" "efs-provisioner" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "efs-provisioner"
   version    = var.stable_efs_provisioner
 
@@ -64,7 +64,7 @@ resource "helm_release" "efs-provisioner" {
 }
 
 resource "helm_release" "k8s-spot-termination-handler" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "k8s-spot-termination-handler"
   version    = var.stable_k8s_spot_termination_handler
 
@@ -94,7 +94,7 @@ resource "helm_release" "k8s-spot-termination-handler" {
 }
 
 resource "helm_release" "metrics-server" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "metrics-server"
   version    = var.stable_metrics_server
 
@@ -139,7 +139,7 @@ resource "helm_release" "metrics-server" {
 # }
 
 # resource "helm_release" "kube-state-metrics" {
-#   repository = "https://kubernetes-charts.storage.googleapis.com"
+#   repository = "https://charts.helm.sh/stable"
 #   chart      = "kube-state-metrics"
 #   version    = var.stable_kube_state_metrics
 

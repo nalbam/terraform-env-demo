@@ -75,6 +75,10 @@ variable "argo_cd_enabled" {
   default = true
 }
 
+variable "argo_cd_grpc_enabled" {
+  default = true
+}
+
 variable "argo_cd_apps_enabled" {
   default = true
 }

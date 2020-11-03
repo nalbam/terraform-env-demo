@@ -1,7 +1,7 @@
 # default
 
 resource "helm_release" "cluster-overprovisioner" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "cluster-overprovisioner"
   version    = var.stable_cluster_overprovisioner
 

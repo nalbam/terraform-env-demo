@@ -15,6 +15,16 @@ variable "kubernetes_version" {
   default     = "1.18"
 }
 
+variable "endpoint_private_access" {
+  description = "API 서버에 private 접근을 허용 합니다."
+  default     = false
+}
+
+variable "endpoint_public_access" {
+  description = "API 서버에 public 접근을 허용 합니다."
+  default     = true
+}
+
 variable "cluster_log_types" {
   description = "CloudWatch 로그를 설정 합니다."
   default     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]

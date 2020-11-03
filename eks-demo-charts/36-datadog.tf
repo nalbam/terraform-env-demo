@@ -3,7 +3,7 @@
 resource "helm_release" "datadog" {
   count = var.datadog_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "datadog"
   version    = var.stable_datadog
 

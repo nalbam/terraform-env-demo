@@ -3,7 +3,7 @@
 resource "helm_release" "prometheus-operator" {
   count = var.prometheus_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "prometheus-operator"
   version    = var.stable_prometheus_operator
 
@@ -34,7 +34,7 @@ resource "helm_release" "prometheus-operator" {
 resource "helm_release" "prometheus-alert-rules" {
   count = var.prometheus_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts-incubator.storage.googleapis.com"
+  repository = "https://charts.helm.sh/incubator"
   chart      = "raw"
 
   namespace = "monitor"
@@ -56,7 +56,7 @@ resource "helm_release" "prometheus-alert-rules" {
 resource "helm_release" "prometheus-adapter" {
   count = var.prometheus_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "prometheus-adapter"
   version    = var.stable_prometheus_adapter
 

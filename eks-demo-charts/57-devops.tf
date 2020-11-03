@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "chartmuseum" {
 resource "helm_release" "chartmuseum" {
   count = var.cluster_role == "devops" ? var.chartmuseum_enabled ? 1 : 0 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "chartmuseum"
   version    = var.stable_chartmuseum
 
@@ -81,7 +81,7 @@ resource "aws_s3_bucket" "docker-registry" {
 resource "helm_release" "docker-registry" {
   count = var.cluster_role == "devops" ? var.registry_enabled ? 1 : 0 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "docker-registry"
   version    = var.stable_docker_registry
 

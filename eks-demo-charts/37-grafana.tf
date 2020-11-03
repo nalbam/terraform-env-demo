@@ -3,7 +3,7 @@
 resource "helm_release" "grafana" {
   count = var.grafana_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "grafana"
   version    = var.stable_grafana
 

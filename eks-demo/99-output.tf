@@ -32,13 +32,17 @@ output "eks_oidc_arn" {
   value = module.eks.oidc_arn
 }
 
-output "vpc_id" {
-  value = module.eks.vpc_id
+output "vpc_config" {
+  value = module.eks.vpc_config
 }
 
-output "subnet_ids" {
-  value = module.eks.subnet_ids
-}
+# output "vpc_id" {
+#   value = module.eks.vpc_id
+# }
+
+# output "subnet_ids" {
+#   value = module.eks.subnet_ids
+# }
 
 output "efs_id" {
   value = module.eks.efs_id
@@ -52,8 +56,8 @@ output "cluster_role_name" {
   value = module.eks.cluster_role_name
 }
 
-output "cluster_security_group_id" {
-  value = module.eks.cluster_security_group_id
+output "cluster_security_groups" {
+  value = module.eks.cluster_security_groups
 }
 
 # output "worker_ami_id" {
@@ -68,8 +72,8 @@ output "worker_role_name" {
   value = module.eks.worker_role_name
 }
 
-output "worker_security_group_id" {
-  value = module.eks.worker_security_group_id
+output "worker_security_groups" {
+  value = module.eks.worker_security_groups
 }
 
 # output "update_kubeconfig" {

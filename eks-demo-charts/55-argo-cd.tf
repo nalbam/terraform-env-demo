@@ -29,11 +29,17 @@ resource "helm_release" "argo-cd" {
 
   values = [
     file("./values/argo/argo-cd.yaml"),
+    local.argocd_configs,
     var.argo_cd_apps_enabled ? local.argocd_apps : "",
     var.sso == "keycloak" ? local.argocd_oidc_keycloak : "",
     var.sso == "google" ? local.argocd_oidc_google : "",
     var.sso == "github" ? local.argocd_oidc_github : "",
   ]
+
+  set {
+    name  = "server.ingressGrpc.enabled"
+    value = var.argo_cd_grpc_enabled
+  }
 
   wait = false
 
@@ -45,6 +51,23 @@ resource "helm_release" "argo-cd" {
 }
 
 locals {
+  # Argo expects the password in the secret to be bcrypt hashed.
+  # You can create this hash with
+  # `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
+  # Password modification time defaults to current time if not set
+  # argocdServerAdminPasswordMtime: "2006-01-02T15:04:05Z"
+  # `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+  argocd_configs = yamlencode(
+    {
+      configs = {
+        secret = {
+          argocdServerAdminPassword      = "$2a$10$mjYDzt/.ApxyUXElpcEs4eNJBJCCIWsuu7t8V1tpmMtZ7rWfVqP62"
+          argocdServerAdminPasswordMtime = "2020-11-02T05:27:46Z"
+        }
+      }
+    }
+  )
+
   argocd_apps = yamlencode(
     {
       server = {

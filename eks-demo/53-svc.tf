@@ -2,7 +2,7 @@
 
 module "svc" {
   source  = "nalbam/eks-worker/aws"
-  version = "0.12.46"
+  version = "0.12.50"
 
   region = var.region
 
@@ -10,14 +10,11 @@ module "svc" {
 
   cluster_name = module.eks.name
 
-  worker_role_name = module.eks.worker_role_name
+  # vpc_id     = module.eks.vpc_id
+  # subnet_ids = module.eks.subnet_ids
 
-  worker_security_groups = [module.eks.worker_security_group_id]
-
-  vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
-
-  subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids
-  subnet_azs = data.terraform_remote_state.vpc.outputs.private_subnet_azs
+  worker_role_name       = module.eks.worker_role_name
+  worker_security_groups = module.eks.worker_security_groups
 
   allow_ip_address = var.allow_ip_address
 

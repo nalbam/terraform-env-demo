@@ -28,9 +28,17 @@ tolerations:
 
 affinity:
   nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
+    # requiredDuringSchedulingIgnoredDuringExecution:
+    #   nodeSelectorTerms:
+    #     - matchExpressions:
+    #         - key: node-role
+    #           operator: In
+    #           values:
+    #             - ops
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
             - key: node-role
               operator: In
               values:
@@ -111,14 +119,14 @@ dashboardProviders:
 
 dashboards:
   default:
-    # https://grafana.com/dashboards/
+    # https://grafana.com/grafana/dashboards/
     kube-cluster:
       gnetId: 9797
-      revision: 13
+      revision: 14
       datasource: Prometheus
     kube-deployment:
       gnetId: 9679
-      revision: 8
+      revision: 9
       datasource: Prometheus
     jenkins-overview:
       gnetId: 12444

@@ -2,7 +2,7 @@
 
 module "eks" {
   source  = "nalbam/eks/aws"
-  version = "0.12.70"
+  version = "0.12.77"
 
   region = var.region
 
@@ -15,6 +15,9 @@ module "eks" {
 
   cluster_log_types             = var.cluster_log_types
   cluster_log_retention_in_days = var.cluster_log_retention_in_days
+
+  endpoint_private_access = var.endpoint_private_access
+  endpoint_public_access  = var.endpoint_public_access
 
   allow_ip_address = var.allow_ip_address
 

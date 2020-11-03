@@ -3,7 +3,7 @@
 resource "helm_release" "chaoskube" {
   count = var.chaoskube_enabled ? 1 : 0
 
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "chaoskube"
   version    = var.stable_chaoskube
 
@@ -20,7 +20,7 @@ resource "helm_release" "chaoskube" {
 # resource "helm_release" "chaos-mesh" {
 #   count = var.chaos_mesh_enabled ? 1 : 0
 
-#   # repository = "https://kubernetes-charts.storage.googleapis.com"
+#   # repository = "https://charts.helm.sh/stable"
 #   repository = "https://opspresso.github.io/helm-charts/"
 #   chart      = "chaos-mesh"
 #   version    = "v0.1.2" # var.chaos_mesh_chaos_mesh
