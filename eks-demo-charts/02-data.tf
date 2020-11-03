@@ -19,6 +19,14 @@ data "aws_ssm_parameter" "admin_password" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "admin_password")
 }
 
+data "aws_ssm_parameter" "argocd_password" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "argocd_password")
+}
+
+data "aws_ssm_parameter" "argocd_mtime" {
+  name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "argocd_mtime")
+}
+
 data "aws_ssm_parameter" "google_client_id" {
   name = format("/k8s/%s/%s/%s", var.cluster_role, var.cluster_name, "google_client_id")
 }

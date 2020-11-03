@@ -61,8 +61,8 @@ locals {
     {
       configs = {
         secret = {
-          argocdServerAdminPassword      = "$2a$10$mjYDzt/.ApxyUXElpcEs4eNJBJCCIWsuu7t8V1tpmMtZ7rWfVqP62"
-          argocdServerAdminPasswordMtime = "2020-11-02T05:27:46Z"
+          argocdServerAdminPassword      = local.argocd_password
+          argocdServerAdminPasswordMtime = local.argocd_mtime
         }
       }
     }

@@ -24,6 +24,9 @@ locals {
   admin_username = data.aws_ssm_parameter.admin_username.value
   admin_password = data.aws_ssm_parameter.admin_password.value
 
+  argocd_password = data.aws_ssm_parameter.argocd_password.value
+  argocd_mtime    = data.aws_ssm_parameter.argocd_mtime.value
+
   slack_token = data.aws_ssm_parameter.slack_token.value
   slack_url   = format("%s%s", "https://hooks.slack.com/services/", local.slack_token)
 }
